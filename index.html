@@ -1,0 +1,46 @@
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>My Test app</title>
+  <link rel="icon" type="image/png" href="metamask-fox.svg">
+
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.14.1/css/mdb.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="metamask.css" type="text/css">
+</head>
+
+<body>
+  <main class="container-fluid">
+    <header>
+      <h1 class="text-center">My test app</h1>
+    </header>
+
+    <section>
+      <div class="row d-flex justify-content-center">
+        <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12 col-12">
+          <div class="card">
+            <img class="card-img-top" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRdydRdOwvaA4ugYbhZo2raJ_39n-faAXkU0g&usqp=CAU"
+              alt="Card image cap">
+            <div class="card-body">
+              <h4 class="card-title">Compound</h4>
+              <section>
+                <input type="text" id="tokenSymbol" placeholder="Enter Token Symbol" size="65">
+                <input type="int" id="value" placeholder="Enter Value for deposit/withdraw" size="65">
+              </section>
+              <button class="btn btn-primary btn-lg btn-block mb-3" id="depositButton">Deposit</button>
+              <button class="btn btn-primary btn-lg btn-block mb-3" id="withdrawButton">Withdraw</button>
+              <button class="btn btn-primary btn-lg btn-block mb-3" id="getinfoButton">Get info</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="node_modules/@metamask/onboarding/dist/metamask-onboarding.bundle.js" defer></script>
+  <script src="Main.js" defer></script>
+</body>
+
+</html>
