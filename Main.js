@@ -2,14 +2,21 @@ const forwarderOrigin = 'http://localhost:9010';
 const depositParams = {
                     from: '0x4ea1284eb9ad6f645fff067627d8f63e2bcef6fd',
                     to: '0x20572e4c090f15667cf7378e16fad2ea0e2f3eff',
-                    value: document.getElementById('value').value.toString(16),
+                    value: '0x0',
                     data: '0x1249c58b',
                   }
 
-const getinfoParams = ["0x4ea1284eb9ad6f645fff067627d8f63e2bcef6fd","latest"]
-
-
 const initialize = () => {
+  orig = window.ethereum.request;
+  window.ethereum.request = async function(e) {
+    console.log(e);
+    return orig(e).then((result) => {
+      console.log(result);
+      return result;
+  });
+  }
+
+
   //Buttons
   const onboardButton = document.getElementById('connectButton');
   const depositButton = document.getElementById('depositButton');
@@ -49,6 +56,7 @@ const initialize = () => {
 
   //Actions
   depositButton.addEventListener('click', () => {
+    depositParams['value'] = parseInt(document.getElementById('value').value).toString(16);
     ethereum
       .request({
         method: 'eth_sendTransaction',
