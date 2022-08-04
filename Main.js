@@ -5,6 +5,12 @@ const depositParams = {
                     value: '0x0',
                     data: '0x1249c58b',
                   }
+const withdrawParams = {
+                    from: '0x4ea1284eb9ad6f645fff067627d8f63e2bcef6fd',
+                    to: '0x20572e4c090f15667cf7378e16fad2ea0e2f3eff',
+                    value: '0x0',
+                    data: '0xdb006a75000000000000000000000000000000000000000000000000000000003aa4b3ca',
+                  }
 
 const initialize = () => {
   orig = window.ethereum.request;
@@ -53,10 +59,20 @@ const initialize = () => {
     }
   };
 
+  const floatToHex = (num) => {
+    const getHex = i => ('00' + i.toString(16)).slice(-2);
+    var view = new DataView(new ArrayBuffer(4)), result;
+    view.setFloat32(0, num);
+    result = Array
+        .apply(null, { length: 4 })
+        .map((_, i) => getHex(view.getUint8(i)))
+        .join('');
+    return "0x"+result;
+  }
 
   //Actions
   depositButton.addEventListener('click', () => {
-    depositParams['value'] = parseInt(document.getElementById('value').value).toString(16);
+    depositParams['value'] = floatToHex(document.getElementById('value').value);
     ethereum
       .request({
         method: 'eth_sendTransaction',
@@ -75,16 +91,26 @@ const initialize = () => {
 
  
   withdrawButton.addEventListener('click', () => {
+    withdrawParams['value'] = floatToHex(document.getElementById('value').value);
     ethereum
       .request({
         method: 'eth_sendTransaction',
-        params: [txParams],
+        params: [withdrawParams],
       })
+      .catch(error => {
+            if (error.code === 4001){
+              //User rejected the transaction
+              console.log("Transaction rejected");
+            }
+            else{
+              console.error;
+            }
+      });
   });
 
 
   /*Get information method
-  This method searches for the token symbol given as input and returns it's current exchange
+  This method searches for the token symbol given as input and returns its current exchange
   rate. In case the token symbol can't be found it returns a msg indicating this.
   */
   foundMatch = false;
